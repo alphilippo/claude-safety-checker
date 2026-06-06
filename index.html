@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Account Safety Checker — Avoid Getting Banned</title>
+<meta name="description" content="Free tool to evaluate your Claude AI usage against Anthropic's official Usage Policies. Check your ban risk, learn the appeal process, and read the FAQ — in 12 languages.">
+<meta name="keywords" content="Claude banned, Anthropic account suspended, Claude ban appeal, Claude usage policy, Anthropic safeguards, Claude account risk, Claude ban checker">
+<meta name="author" content="alphilippo — github.com/alphilippo">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Claude Account Safety Checker">
+<meta property="og:description" content="Check your Claude AI usage risk against Anthropic's official policies. Appeal guide, FAQ, 12 languages. Free & open source.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://alphilippo.github.io/claude-safety-checker">
+<meta property="og:image" content="https://alphilippo.github.io/claude-safety-checker/og-image.png">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Account Safety Checker">
+<meta name="twitter:description" content="Check your Claude AI usage risk, learn how to appeal a ban, FAQ — 12 languages. Free tool by @alphilippo.">
+
+<!-- Canonical -->
+<link rel="canonical" href="https://alphilippo.github.io/claude-safety-checker/">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Tabler Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.33.0/dist/tabler-icons.min.css">
+
+<style>
+:root {
+  --bg: #ffffff;
+  --bg2: #f7f6f3;
+  --bg3: #f0efe9;
+  --text: #1a1917;
+  --text2: #6b6962;
+  --text3: #9b9890;
+  --border: rgba(26,25,23,0.12);
+  --border2: rgba(26,25,23,0.22);
+  --blue: #185FA5;
+  --blue-bg: #E6F1FB;
+  --blue-dark: #0C447C;
+  --green-bg: #EAF3DE;
+  --green: #3B6D11;
+  --green-dark: #27500A;
+  --amber-bg: #FAEEDA;
+  --amber: #854F0B;
+  --amber-dark: #633806;
+  --red-bg: #FCEBEB;
+  --red: #A32D2D;
+  --red-dark: #791F1F;
+  --red-mid: #E24B4A;
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  --font: 'DM Sans', system-ui, sans-serif;
+  --mono: 'DM Mono', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #18181b;
+    --bg2: #1f1f23;
+    --bg3: #27272a;
+    --text: #fafaf9;
+    --text2: #a1a09c;
+    --text3: #6b6962;
+    --border: rgba(255,255,255,0.1);
+    --border2: rgba(255,255,255,0.18);
+    --blue: #5BA3E0;
+    --blue-bg: #0c2a47;
+    --blue-dark: #93c5fd;
+    --green-bg: #0f2d0a;
+    --green: #86c864;
+    --green-dark: #c0dd97;
+    --amber-bg: #2d1e06;
+    --amber: #fac75e;
+    --amber-dark: #faeeda;
+    --red-bg: #2d0f0f;
+    --red: #f09595;
+    --red-dark: #f7c1c1;
+    --red-mid: #e24b4a;
+  }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg3);
+  color: var(--text);
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* Page layout */
+.page-wrap {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* Site header */
+.site-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.site-header-left h1 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.site-header-left h1 i { color: var(--blue); font-size: 22px; }
+
+.site-header-left p {
+  font-size: 13px;
+  color: var(--text2);
+  max-width: 480px;
+  line-height: 1.5;
+}
+
+.lang-wrap {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+}
+
+.lang-label { font-size: 12px; color: var(--text3); }
+
+.lang-select {
+  font-size: 13px;
+  font-family: var(--font);
+  padding: 6px 10px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Info note */
+.info-note {
+  font-size: 12px;
+  color: var(--text2);
+  padding: 8px 12px;
+  background: var(--bg2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+}
+
+.info-note i { color: var(--blue); font-size: 14px; flex-shrink: 0; margin-top: 1px; }
+
+/* Card container */
+.card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.tab {
+  padding: 12px 18px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text2);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all .15s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  font-family: var(--font);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab:hover { color: var(--text); }
+.tab.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--bg); }
+.tab i { font-size: 14px; }
+
+/* Panel */
+.panel { display: none; padding: 1.5rem; }
+.panel.active { display: block; }
+
+/* Section label */
+.section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  margin-bottom: 10px;
+}
+
+/* Profile buttons */
+.profile-row {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.profile-btn {
+  padding: 7px 13px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  background: var(--bg);
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text2);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all .15s;
+}
+
+.profile-btn:hover { background: var(--bg2); color: var(--text); }
+.profile-btn.active { border-color: var(--blue); color: var(--blue); background: var(--blue-bg); font-weight: 500; }
+
+/* Check items */
+.checks-grid { display: flex; flex-direction: column; gap: 7px; margin-bottom: 1.5rem; }
+
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all .15s;
+}
+
+.check-item:hover { border-color: var(--border2); background: var(--bg2); }
+.check-item.checked { border-color: var(--red); background: var(--red-bg); }
+.check-item.checked .check-label { color: var(--red-dark); }
+
+.check-box {
+  width: 17px;
+  height: 17px;
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg);
+  transition: all .15s;
+}
+
+.check-item.checked .check-box { background: var(--red-mid); border-color: var(--red-mid); }
+.check-label { font-size: 13px; color: var(--text); line-height: 1.5; }
+.check-sub { font-size: 12px; color: var(--text2); margin-top: 2px; }
+
+/* Risk panel */
+.risk-panel {
+  padding: 1.125rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.risk-panel.safe { background: var(--green-bg); border-color: var(--green); }
+.risk-panel.warning { background: var(--amber-bg); border-color: var(--amber); }
+.risk-panel.danger { background: var(--red-bg); border-color: var(--red); }
+
+.risk-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+
+.risk-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+.safe .risk-badge { background: var(--green); color: var(--green-bg); }
+.warning .risk-badge { background: var(--amber); color: var(--amber-bg); }
+.danger .risk-badge { background: var(--red); color: var(--red-bg); }
+
+.risk-title { font-size: 15px; font-weight: 500; }
+.safe .risk-title { color: var(--green-dark); }
+.warning .risk-title { color: var(--amber-dark); }
+.danger .risk-title { color: var(--red-dark); }
+
+.risk-desc { font-size: 13px; line-height: 1.6; }
+.safe .risk-desc { color: var(--green); }
+.warning .risk-desc { color: var(--amber); }
+.danger .risk-desc { color: var(--red); }
+
+/* Alerts */
+.alerts-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1.5rem; }
+
+.alert-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.alert-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.alert-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+.ext-link {
+  font-size: 12px;
+  color: var(--blue);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+.ext-link:hover { text-decoration: underline; }
+
+/* Divider */
+.divider { height: 1px; background: var(--border); margin: 1.5rem 0; }
+
+/* Textarea & buttons */
+.prompt-label { font-size: 13px; color: var(--text2); margin-bottom: 8px; }
+
+.prompt-box {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  resize: vertical;
+  min-height: 72px;
+  transition: border-color .15s;
+}
+
+.prompt-box:focus { outline: none; border-color: var(--blue); }
+
+.btn-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+
+.action-btn {
+  padding: 8px 14px;
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  font-size: 13px;
+  font-family: var(--font);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  transition: all .15s;
+}
+
+.action-btn:hover { background: var(--bg2); }
+.action-btn.primary { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); font-weight: 500; }
+.action-btn.primary:hover { background: #c9e2f8; }
+
+/* System prompt box */
+.sp-box {
+  margin-top: 1rem;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.sp-box pre {
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--text2);
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.6;
+}
+
+.copy-btn {
+  font-size: 12px;
+  color: var(--blue);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding: 0;
+  font-family: var(--font);
+}
+
+/* Steps */
+.step-card {
+  display: flex;
+  gap: 14px;
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  margin-bottom: 8px;
+}
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--blue-bg);
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 3px; }
+.step-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+/* Stat row */
+.stat-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 10px;
+  margin: 1rem 0;
+}
+
+.stat-card {
+  background: var(--bg2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  padding: 13px 10px;
+  text-align: center;
+}
+
+.stat-num { font-size: 20px; font-weight: 600; color: var(--text); }
+.stat-label { font-size: 11px; color: var(--text2); margin-top: 3px; line-height: 1.4; }
+
+/* Tip / warn boxes */
+.tip-box {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--blue);
+  background: var(--blue-bg);
+  margin-bottom: 12px;
+}
+
+.tip-box p { font-size: 13px; color: var(--blue-dark); line-height: 1.6; }
+
+.warn-box {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--amber);
+  background: var(--amber-bg);
+  margin-bottom: 12px;
+}
+
+.warn-box p { font-size: 13px; color: var(--amber-dark); line-height: 1.6; }
+
+/* English-only note */
+.en-note {
+  font-size: 11px;
+  color: var(--text3);
+  font-style: italic;
+  padding: 6px 10px;
+  background: var(--bg2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Support cards */
+.support-card {
+  padding: 13px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  margin-bottom: 8px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.support-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.support-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+.support-body { font-size: 12px; color: var(--text2); line-height: 1.6; }
+
+/* FAQ */
+.faq-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: 7px;
+  overflow: hidden;
+}
+
+.faq-q {
+  padding: 12px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--bg);
+  gap: 8px;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-family: var(--font);
+}
+
+.faq-q:hover { background: var(--bg2); }
+
+.faq-a {
+  font-size: 13px;
+  color: var(--text2);
+  line-height: 1.7;
+  padding: 0 14px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .25s ease, padding .25s ease;
+  background: var(--bg);
+}
+
+.faq-a.open { max-height: 500px; padding: 0 14px 13px; }
+
+/* Footer */
+.site-footer {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  text-align: center;
+}
+
+.site-footer p {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.6;
+}
+
+.site-footer a { color: var(--blue); text-decoration: none; }
+.site-footer a:hover { text-decoration: underline; }
+
+.disclaimer {
+  font-size: 11px;
+  color: var(--text3);
+  padding: 8px 12px;
+  background: var(--bg2);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  max-width: 560px;
+  line-height: 1.5;
+}
+
+.hidden { display: none; }
+
+@media (max-width: 480px) {
+  .site-header { flex-direction: column; }
+  .tabs { overflow-x: auto; }
+  .tab { white-space: nowrap; padding: 10px 12px; font-size: 12px; }
+  .panel { padding: 1rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+  <!-- Header -->
+  <div class="site-header">
+    <div class="site-header-left">
+      <h1><i class="ti ti-shield-check"></i> <span id="ui-title">Claude Account Safety Checker</span></h1>
+      <p id="ui-subtitle">Evaluate your Claude AI usage against Anthropic's official policies before it's too late.</p>
+    </div>
+    <div class="lang-wrap">
+      <span class="lang-label" id="ui-lang-label">Language</span>
+      <select class="lang-select" id="lang-select" onchange="setLang(this.value)">
+        <option value="en">🇬🇧 English</option>
+        <option value="fr">🇫🇷 Français</option>
+        <option value="de">🇩🇪 Deutsch</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="pt">🇧🇷 Português</option>
+        <option value="it">🇮🇹 Italiano</option>
+        <option value="ru">🇷🇺 Русский</option>
+        <option value="id">🇮🇩 Bahasa Indonesia</option>
+        <option value="ja">🇯🇵 日本語</option>
+        <option value="ko">🇰🇷 한국어</option>
+        <option value="zh">🇨🇳 简体中文</option>
+        <option value="zh-tw">🇹🇼 繁體中文</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Doc availability note -->
+  <div class="info-note">
+    <i class="ti ti-info-circle"></i>
+    <span id="lang-note">✓ Documentation available in this language on support.claude.com — all links point to the official localized version.</span>
+  </div>
+
+  <!-- Main card -->
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" id="tab-checker" onclick="switchTab('checker')">
+        <i class="ti ti-shield-check"></i><span id="tab1-label">Risk Checker</span>
+      </button>
+      <button class="tab" id="tab-appeal" onclick="switchTab('appeal')">
+        <i class="ti ti-refresh-alert"></i><span id="tab2-label">I'm banned</span>
+      </button>
+      <button class="tab" id="tab-faq" onclick="switchTab('faq')">
+        <i class="ti ti-help-circle"></i><span id="tab3-label">FAQ</span>
+      </button>
+    </div>
+
+    <!-- Tab 1: Risk Checker -->
+    <div id="panel-checker" class="panel active">
+      <div class="section-label" id="ui-profile-label">Your profile</div>
+      <div class="profile-row">
+        <button class="profile-btn active" onclick="setProfile('all')" id="btn-all">
+          <i class="ti ti-users"></i><span id="p-all">All profiles</span>
+        </button>
+        <button class="profile-btn" onclick="setProfile('user')" id="btn-user">
+          <i class="ti ti-user"></i><span id="p-user">General user</span>
+        </button>
+        <button class="profile-btn" onclick="setProfile('dev')" id="btn-dev">
+          <i class="ti ti-code"></i><span id="p-dev">Developer / API</span>
+        </button>
+        <button class="profile-btn" onclick="setProfile('pro')" id="btn-pro">
+          <i class="ti ti-building"></i><span id="p-pro">Business / Pro</span>
+        </button>
+      </div>
+
+      <div class="section-label" id="ui-checks-label">Flag the practices that match your usage</div>
+      <div class="checks-grid" id="checks-container"></div>
+
+      <div id="risk-result" class="risk-panel safe">
+        <div class="risk-header">
+          <span class="risk-badge" id="risk-badge">✓ Low risk</span>
+          <span class="risk-title" id="risk-title">Usage looks compliant</span>
+        </div>
+        <p class="risk-desc" id="risk-desc">No risky practices detected.</p>
+      </div>
+
+      <div id="alerts-container" class="hidden">
+        <div class="section-label" id="ui-alerts-label">Detected risk details</div>
+        <div class="alerts-list" id="alerts-list"></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-label" id="ui-case-label">Analyse your specific case</div>
+      <p class="prompt-label" id="ui-case-sub">Describe your use case for a more detailed analysis</p>
+      <textarea class="prompt-box" id="use-case-input" placeholder="e.g. I want to automate API calls from a Python script to process emails in bulk for my company…"></textarea>
+      <div class="btn-row">
+        <button class="action-btn primary" onclick="analyzeCase()">
+          <i class="ti ti-search"></i><span id="ui-btn-analyze">Analyse my case with Claude</span>
+        </button>
+        <button class="action-btn" onclick="generateSystemPrompt()">
+          <i class="ti ti-code"></i><span id="ui-btn-sysprompt">Generate dev system prompt</span>
+        </button>
+      </div>
+      <div id="system-prompt-output" class="hidden">
+        <div class="sp-box">
+          <div style="font-size:12px;font-weight:500;color:var(--text2);margin-bottom:8px" id="ui-sp-label">System prompt — paste into your app</div>
+          <pre id="system-prompt-text"></pre>
+          <button class="copy-btn" onclick="copyPrompt()">
+            <i class="ti ti-copy"></i><span id="ui-copy">Copy</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab 2: I'm banned -->
+    <div id="panel-appeal" class="panel">
+      <div class="warn-box">
+        <p id="appeal-warn-text"><i class="ti ti-alert-triangle" style="vertical-align:-2px;margin-right:5px"></i>According to Anthropic's Transparency Hub, only <strong>3.3% of appeals</strong> result in account restoration (1,700 out of 52,000 in H2 2025). A well-prepared appeal significantly improves your odds.</p>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-num">1.45M</div><div class="stat-label" id="stat1">accounts banned H2 2025</div></div>
+        <div class="stat-card"><div class="stat-num">52k</div><div class="stat-label" id="stat2">appeals filed</div></div>
+        <div class="stat-card"><div class="stat-num">3.3%</div><div class="stat-label" id="stat3">appeal success rate</div></div>
+        <div class="stat-card"><div class="stat-num">30d</div><div class="stat-label" id="stat4">age-verify deadline</div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section-label" id="ui-steps-label">Step-by-step appeal process</div>
+
+      <div class="en-note">
+        <i class="ti ti-language"></i>
+        <span id="en-note-text">Steps and FAQ are kept in English as the appeal process itself takes place in English on Anthropic's platform (claude.ai/restricted).</span>
+      </div>
+
+      <div id="steps-container"></div>
+
+      <div class="divider"></div>
+
+      <div class="section-label" id="ui-support-label">Support access by plan</div>
+      <div id="support-container"></div>
+
+      <div class="divider"></div>
+      <div class="btn-row">
+        <a class="action-btn primary" href="https://claude.ai/restricted" target="_blank" rel="noopener">
+          <i class="ti ti-external-link"></i><span id="ui-btn-appeal-link">Submit appeal on claude.ai</span>
+        </a>
+        <a class="action-btn" href="https://claude.ai" target="_blank" rel="noopener">
+          <i class="ti ti-message"></i><span id="ui-btn-help-write">Ask Claude to help write my appeal</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Tab 3: FAQ -->
+    <div id="panel-faq" class="panel">
+      <div class="tip-box">
+        <p id="faq-tip-text"><i class="ti ti-book" style="vertical-align:-2px;margin-right:5px"></i>All answers are sourced from Anthropic's official Help Center, Usage Policy, and Transparency Hub documentation.</p>
+      </div>
+
+      <div class="en-note">
+        <i class="ti ti-language"></i>
+        <span id="en-note-faq">FAQ is kept in English as the appeal process itself takes place in English on Anthropic's platform. Translations by native speakers welcome — see GitHub.</span>
+      </div>
+
+      <div id="faq-list"></div>
+
+      <div class="divider"></div>
+      <div class="btn-row">
+        <a class="action-btn primary" href="https://claude.ai" target="_blank" rel="noopener">
+          <i class="ti ti-message"></i><span id="ui-btn-ask">Ask Claude directly</span>
+        </a>
+        <a class="action-btn" id="help-center-link" href="https://support.claude.com/en/" target="_blank" rel="noopener">
+          <i class="ti ti-external-link"></i><span id="ui-helpcenter">Official Help Center</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="site-footer">
+    <div class="disclaimer" id="disclaimer-text">
+      ⚠️ This tool is not affiliated with Anthropic. It is an independent resource built from publicly available official documentation. Always refer to <a href="https://www.anthropic.com/legal/aup" target="_blank" rel="noopener">anthropic.com/legal/aup</a> for the authoritative source.
+    </div>
+    <p>
+      Built by <a href="https://github.com/alphilippo" target="_blank" rel="noopener">@alphilippo</a> ·
+      Sources: <a href="https://www.anthropic.com/legal/aup" target="_blank" rel="noopener">Anthropic Usage Policy</a>,
+      <a href="https://support.claude.com" target="_blank" rel="noopener">Help Center</a>,
+      <a href="https://www.anthropic.com/transparency/platform-security" target="_blank" rel="noopener">Transparency Hub</a> ·
+      <a href="https://github.com/alphilippo/claude-safety-checker" target="_blank" rel="noopener">GitHub</a>
+    </p>
+    <p style="font-size:11px;color:var(--text3)">Last updated: June 2026 · Policy source: Anthropic Usage Policy (eff. Sept. 15, 2025)</p>
+  </div>
+
+</div>
+
+<script>
+// ─── UI STRINGS ───────────────────────────────────────────────────────────────
+const UI = {
+  en:{title:'Claude Account Safety Checker',subtitle:'Evaluate your Claude AI usage against Anthropic\'s official policies before it\'s too late.',langLabel:'Language',langNote:'✓ Documentation available in this language on support.claude.com — all links point to the official localized version.',tab1:'Risk Checker',tab2:'I\'m banned',tab3:'FAQ',profileLabel:'Your profile',checksLabel:'Flag the practices that match your usage',alertsLabel:'Detected risk details',caseLabel:'Analyse your specific case',caseSub:'Describe your use case for a more detailed analysis',placeholder:'e.g. I want to automate API calls from a Python script to process emails in bulk…',btnAnalyze:'Analyse my case with Claude',btnSysprompt:'Generate dev system prompt',spLabel:'System prompt — paste into your app',copy:'Copy',copied:'Copied!',pAll:'All profiles',pUser:'General user',pDev:'Developer / API',pPro:'Business / Pro',stepsLabel:'Step-by-step appeal process',supportLabel:'Support access by plan',btnAppealLink:'Submit appeal on claude.ai',btnHelpWrite:'Ask Claude to help write my appeal',btnAsk:'Ask Claude directly',helpCenter:'Official Help Center',faqTip:'All answers are sourced from Anthropic\'s official Help Center, Usage Policy, and Transparency Hub documentation.',appealWarn:'According to Anthropic\'s Transparency Hub, only 3.3% of appeals result in account restoration (1,700 out of 52,000 in H2 2025). A well-prepared appeal significantly improves your odds.',stat1:'accounts banned H2 2025',stat2:'appeals filed',stat3:'appeal success rate',stat4:'age-verify deadline',enNote:'Steps and FAQ are kept in English as the appeal process itself takes place in English on Anthropic\'s platform (claude.ai/restricted).',enNoteFaq:'FAQ is kept in English as the appeal process itself takes place in English on Anthropic\'s platform. Translations by native speakers welcome — see GitHub.',lowRisk:'✓ Low risk',lowTitle:'Usage looks compliant',lowDesc:'No risky practices detected. Your usage appears to be in line with Anthropic\'s Usage Policies.',critBadge:'⚠ Critical risk',critTitle:'Ban is near-certain',highBadge:'⚠ High risk',highTitle:'Strong likelihood of ban',warnBadge:'~ Moderate risk',warnTitle:'Grey zone — adjust your usage',policyLabel:'Policy:',officialPolicy:'Official policy',detected:' practice(s) detected',critDesc:' — at least one triggers an immediate, likely permanent ban. Stop these uses immediately.',highDesc:' that directly violate Anthropic\'s Usage Policies. A ban may occur without prior warning.',warnDesc:' that may attract Anthropic\'s Safeguards team. No immediate ban, but adjustments advised.',disclaimer:'⚠️ This tool is not affiliated with Anthropic. It is an independent resource built from publicly available official documentation. Always refer to anthropic.com/legal/aup for the authoritative source.'},
+  fr:{title:'Claude — Vérificateur de risque de bannissement',subtitle:'Évalue ton usage de Claude avant qu\'il ne soit trop tard.',langLabel:'Langue',langNote:'✓ Documentation disponible dans cette langue sur support.claude.com — tous les liens pointent vers la version officielle localisée.',tab1:'Vérifier mon usage',tab2:'Je suis banni',tab3:'FAQ',profileLabel:'Ton profil',checksLabel:'Coche les pratiques qui correspondent à ton usage',alertsLabel:'Détails des risques détectés',caseLabel:'Analyser ton cas spécifique',caseSub:'Décris ton usage pour une analyse plus précise',placeholder:'Ex : Je veux automatiser des appels API depuis Python pour traiter des emails en masse…',btnAnalyze:'Analyser mon cas avec Claude',btnSysprompt:'Générer un system prompt dev',spLabel:'System prompt — à coller dans ton app',copy:'Copier',copied:'Copié !',pAll:'Tous profils',pUser:'Grand public',pDev:'Développeur / API',pPro:'Entreprise / Pro',stepsLabel:'Procédure d\'appel étape par étape',supportLabel:'Accès au support selon le plan',btnAppealLink:'Soumettre un appel sur claude.ai',btnHelpWrite:'Demander à Claude de m\'aider à rédiger',btnAsk:'Demander à Claude',helpCenter:'Centre d\'aide officiel',faqTip:'Toutes les réponses sont issues de la documentation officielle d\'Anthropic (Help Center, Usage Policy, Transparency Hub).',appealWarn:'Selon le Transparency Hub d\'Anthropic, seulement 3,3 % des appels aboutissent à une restauration du compte (1 700 sur 52 000 au S2 2025). Un appel bien préparé améliore considérablement tes chances.',stat1:'comptes bannis S2 2025',stat2:'appels déposés',stat3:'taux de succès',stat4:'délai vérification d\'âge',enNote:'Les étapes et la FAQ restent en anglais car la procédure d\'appel se déroule en anglais sur la plateforme Anthropic (claude.ai/restricted).',enNoteFaq:'La FAQ reste en anglais car la procédure d\'appel se déroule en anglais. Traductions par des locuteurs natifs bienvenues — voir GitHub.',lowRisk:'✓ Risque faible',lowTitle:'Usage conforme',lowDesc:'Aucune pratique à risque détectée. Ton usage semble conforme aux Usage Policies d\'Anthropic.',critBadge:'⚠ Risque critique',critTitle:'Bannissement quasi certain',highBadge:'⚠ Risque élevé',highTitle:'Forte probabilité de bannissement',warnBadge:'~ Risque modéré',warnTitle:'Zone grise — ajuste ton usage',policyLabel:'Politique :',officialPolicy:'Politique officielle',detected:' pratique(s) détectée(s)',critDesc:' — au moins une entraîne un bannissement immédiat et potentiellement définitif.',highDesc:' qui violent directement les Usage Policies d\'Anthropic. Un ban peut survenir sans avertissement.',warnDesc:' pouvant attirer l\'attention de l\'équipe Safeguards. Pas de ban immédiat, mais des ajustements sont conseillés.',disclaimer:'⚠️ Cet outil n\'est pas affilié à Anthropic. C\'est une ressource indépendante basée sur la documentation officielle publique. Référez-vous toujours à anthropic.com/legal/aup pour la source officielle.'},
+  de:{title:'Claude — Kontosicherheits-Checker',subtitle:'Prüfe deinen Claude-Nutzung anhand der offiziellen Richtlinien von Anthropic.',langLabel:'Sprache',langNote:'✓ Dokumentation in dieser Sprache auf support.claude.com verfügbar — alle Links führen zur offiziellen lokalisierten Version.',tab1:'Risiko prüfen',tab2:'Ich bin gesperrt',tab3:'FAQ',profileLabel:'Dein Profil',checksLabel:'Markiere die Praktiken, die auf deine Nutzung zutreffen',alertsLabel:'Erkannte Risiken im Detail',caseLabel:'Deinen spezifischen Fall analysieren',caseSub:'Beschreibe deinen Anwendungsfall für eine genauere Analyse',placeholder:'z.B. Ich möchte API-Aufrufe per Python-Skript automatisieren…',btnAnalyze:'Meinen Fall mit Claude analysieren',btnSysprompt:'Dev System-Prompt generieren',spLabel:'System-Prompt — in deine App einfügen',copy:'Kopieren',copied:'Kopiert!',pAll:'Alle Profile',pUser:'Allgemeiner Nutzer',pDev:'Entwickler / API',pPro:'Unternehmen / Pro',stepsLabel:'Schritt-für-Schritt Einspruchsverfahren',supportLabel:'Support-Zugang nach Plan',btnAppealLink:'Einspruch auf claude.ai einreichen',btnHelpWrite:'Claude um Hilfe beim Schreiben bitten',btnAsk:'Claude direkt fragen',helpCenter:'Offizielles Hilfezentrum',faqTip:'Alle Antworten stammen aus der offiziellen Anthropic-Dokumentation.',appealWarn:'Laut Anthropics Transparency Hub führen nur 3,3 % der Einsprüche zur Kontowiederherstellung. Ein gut vorbereiteter Einspruch verbessert deine Chancen erheblich.',stat1:'gesperrte Konten H2 2025',stat2:'eingereichte Einsprüche',stat3:'Erfolgsquote',stat4:'Frist Altersverifizierung',enNote:'Schritte und FAQ bleiben auf Englisch, da das Einspruchsverfahren auf der Anthropic-Plattform (claude.ai/restricted) auf Englisch stattfindet.',enNoteFaq:'FAQ bleibt auf Englisch. Übersetzungen von Muttersprachlern willkommen — siehe GitHub.',lowRisk:'✓ Geringes Risiko',lowTitle:'Nutzung scheint konform',lowDesc:'Keine riskanten Praktiken erkannt. Deine Nutzung scheint den Anthropic-Richtlinien zu entsprechen.',critBadge:'⚠ Kritisches Risiko',critTitle:'Sperre ist fast sicher',highBadge:'⚠ Hohes Risiko',highTitle:'Hohe Wahrscheinlichkeit einer Sperre',warnBadge:'~ Moderates Risiko',warnTitle:'Grauzone — passe deine Nutzung an',policyLabel:'Richtlinie:',officialPolicy:'Offizielle Richtlinie',detected:' Praktik(en) erkannt',critDesc:' — mindestens eine löst eine sofortige, wahrscheinlich dauerhafte Sperre aus.',highDesc:' die direkt gegen Anthropics Richtlinien verstoßen.',warnDesc:' die Aufmerksamkeit erregen könnten. Keine sofortige Sperre, aber Anpassungen empfohlen.',disclaimer:'⚠️ Dieses Tool ist nicht mit Anthropic verbunden. Es ist eine unabhängige Ressource auf Basis offizieller Dokumentation.'},
+  es:{title:'Claude — Verificador de riesgo de baneo',subtitle:'Evalúa tu uso de Claude frente a las políticas oficiales de Anthropic.',langLabel:'Idioma',langNote:'✓ Documentación disponible en este idioma en support.claude.com.',tab1:'Verificar uso',tab2:'Estoy baneado',tab3:'FAQ',profileLabel:'Tu perfil',checksLabel:'Marca las prácticas que correspondan a tu uso',alertsLabel:'Detalles de riesgos detectados',caseLabel:'Analizar tu caso específico',caseSub:'Describe tu caso de uso para un análisis más detallado',placeholder:'Ej: Quiero automatizar llamadas API desde Python para procesar emails masivamente…',btnAnalyze:'Analizar mi caso con Claude',btnSysprompt:'Generar system prompt dev',spLabel:'System prompt — pega en tu app',copy:'Copiar',copied:'¡Copiado!',pAll:'Todos los perfiles',pUser:'Usuario general',pDev:'Desarrollador / API',pPro:'Empresa / Pro',stepsLabel:'Proceso de apelación paso a paso',supportLabel:'Acceso al soporte según el plan',btnAppealLink:'Enviar apelación en claude.ai',btnHelpWrite:'Pedir a Claude ayuda para redactar',btnAsk:'Preguntar a Claude',helpCenter:'Centro de ayuda oficial',faqTip:'Todas las respuestas provienen de la documentación oficial de Anthropic.',appealWarn:'Según el Transparency Hub de Anthropic, solo el 3,3% de las apelaciones resultan en restauración de cuenta.',stat1:'cuentas baneadas H2 2025',stat2:'apelaciones presentadas',stat3:'tasa de éxito',stat4:'plazo verificación de edad',enNote:'Los pasos y FAQ se mantienen en inglés ya que el proceso de apelación se realiza en inglés en la plataforma de Anthropic (claude.ai/restricted).',enNoteFaq:'FAQ en inglés. Traducciones por hablantes nativos bienvenidas — ver GitHub.',lowRisk:'✓ Riesgo bajo',lowTitle:'Uso parece conforme',lowDesc:'No se detectaron prácticas de riesgo.',critBadge:'⚠ Riesgo crítico',critTitle:'Baneo casi seguro',highBadge:'⚠ Riesgo alto',highTitle:'Alta probabilidad de baneo',warnBadge:'~ Riesgo moderado',warnTitle:'Zona gris — ajusta tu uso',policyLabel:'Política:',officialPolicy:'Política oficial',detected:' práctica(s) detectada(s)',critDesc:' — al menos una activa un baneo inmediato.',highDesc:' que violan directamente las políticas de Anthropic.',warnDesc:' que pueden atraer atención. Sin baneo inmediato, pero ajustes recomendados.',disclaimer:'⚠️ Esta herramienta no está afiliada con Anthropic. Recurso independiente basado en documentación oficial pública.'},
+  pt:{title:'Claude — Verificador de risco de banimento',subtitle:'Avalie seu uso do Claude com base nas políticas oficiais da Anthropic.',langLabel:'Idioma',langNote:'✓ Documentação disponível neste idioma em support.claude.com.',tab1:'Verificar uso',tab2:'Fui banido',tab3:'FAQ',profileLabel:'Seu perfil',checksLabel:'Marque as práticas que correspondem ao seu uso',alertsLabel:'Detalhes dos riscos detectados',caseLabel:'Analisar seu caso específico',caseSub:'Descreva seu caso para uma análise mais detalhada',placeholder:'Ex: Quero automatizar chamadas API via Python para processar e-mails em massa…',btnAnalyze:'Analisar meu caso com Claude',btnSysprompt:'Gerar system prompt dev',spLabel:'System prompt — cole no seu app',copy:'Copiar',copied:'Copiado!',pAll:'Todos os perfis',pUser:'Usuário geral',pDev:'Desenvolvedor / API',pPro:'Empresa / Pro',stepsLabel:'Processo de apelação passo a passo',supportLabel:'Acesso ao suporte por plano',btnAppealLink:'Enviar apelação no claude.ai',btnHelpWrite:'Pedir ao Claude ajuda para redigir',btnAsk:'Perguntar ao Claude',helpCenter:'Central de ajuda oficial',faqTip:'Todas as respostas são extraídas da documentação oficial da Anthropic.',appealWarn:'Segundo o Transparency Hub da Anthropic, apenas 3,3% das apelações resultam na restauração da conta.',stat1:'contas banidas S2 2025',stat2:'apelações apresentadas',stat3:'taxa de sucesso',stat4:'prazo verificação de idade',enNote:'As etapas e o FAQ permanecem em inglês pois o processo de apelação ocorre em inglês na plataforma Anthropic (claude.ai/restricted).',enNoteFaq:'FAQ em inglês. Traduções por falantes nativos bem-vindas — veja o GitHub.',lowRisk:'✓ Risco baixo',lowTitle:'Uso parece conforme',lowDesc:'Nenhuma prática de risco detectada.',critBadge:'⚠ Risco crítico',critTitle:'Banimento quase certo',highBadge:'⚠ Risco alto',highTitle:'Alta probabilidade de banimento',warnBadge:'~ Risco moderado',warnTitle:'Zona cinzenta — ajuste seu uso',policyLabel:'Política:',officialPolicy:'Política oficial',detected:' prática(s) detectada(s)',critDesc:' — ao menos uma aciona um banimento imediato.',highDesc:' que violam diretamente as políticas da Anthropic.',warnDesc:' que podem chamar atenção. Sem banimento imediato, mas ajustes recomendados.',disclaimer:'⚠️ Esta ferramenta não é afiliada à Anthropic. Recurso independente baseado em documentação oficial pública.'},
+  it:{title:'Claude — Verifica rischio di ban',subtitle:'Valuta il tuo utilizzo di Claude rispetto alle politiche ufficiali di Anthropic.',langLabel:'Lingua',langNote:'✓ Documentazione disponibile in questa lingua su support.claude.com.',tab1:'Verifica uso',tab2:'Sono stato bannato',tab3:'FAQ',profileLabel:'Il tuo profilo',checksLabel:'Seleziona le pratiche che corrispondono al tuo utilizzo',alertsLabel:'Dettagli dei rischi rilevati',caseLabel:'Analizza il tuo caso specifico',caseSub:'Descrivi il tuo caso per un\'analisi più dettagliata',placeholder:'Es: Voglio automatizzare chiamate API tramite Python per elaborare email in massa…',btnAnalyze:'Analizza il mio caso con Claude',btnSysprompt:'Genera system prompt dev',spLabel:'System prompt — incolla nella tua app',copy:'Copia',copied:'Copiato!',pAll:'Tutti i profili',pUser:'Utente generale',pDev:'Sviluppatore / API',pPro:'Azienda / Pro',stepsLabel:'Procedura di appello passo dopo passo',supportLabel:'Accesso al supporto per piano',btnAppealLink:'Invia appello su claude.ai',btnHelpWrite:'Chiedi a Claude aiuto per scrivere',btnAsk:'Chiedi a Claude',helpCenter:'Centro assistenza ufficiale',faqTip:'Tutte le risposte provengono dalla documentazione ufficiale di Anthropic.',appealWarn:'Secondo il Transparency Hub di Anthropic, solo il 3,3% degli appelli porta al ripristino dell\'account.',stat1:'account bannati S2 2025',stat2:'appelli presentati',stat3:'tasso di successo',stat4:'scadenza verifica età',enNote:'I passaggi e le FAQ rimangono in inglese poiché la procedura di appello si svolge in inglese sulla piattaforma Anthropic (claude.ai/restricted).',enNoteFaq:'FAQ in inglese. Traduzioni da madrelingua benvenute — vedi GitHub.',lowRisk:'✓ Rischio basso',lowTitle:'Utilizzo conforme',lowDesc:'Nessuna pratica a rischio rilevata.',critBadge:'⚠ Rischio critico',critTitle:'Ban quasi certo',highBadge:'⚠ Rischio elevato',highTitle:'Alta probabilità di ban',warnBadge:'~ Rischio moderato',warnTitle:'Zona grigia — adatta il tuo utilizzo',policyLabel:'Politica:',officialPolicy:'Politica ufficiale',detected:' pratica/e rilevata/e',critDesc:' — almeno una attiva un ban immediato.',highDesc:' che violano direttamente le politiche di Anthropic.',warnDesc:' che potrebbero attirare attenzione. Nessun ban immediato, ma aggiustamenti consigliati.',disclaimer:'⚠️ Questo strumento non è affiliato ad Anthropic. Risorsa indipendente basata su documentazione ufficiale pubblica.'},
+  ru:{title:'Claude — Проверка риска блокировки',subtitle:'Проверьте соответствие вашего использования Claude официальной политике Anthropic.',langLabel:'Язык',langNote:'✓ Документация доступна на этом языке на support.claude.com.',tab1:'Проверить использование',tab2:'Меня заблокировали',tab3:'FAQ',profileLabel:'Ваш профиль',checksLabel:'Отметьте практики, соответствующие вашему использованию',alertsLabel:'Подробности обнаруженных рисков',caseLabel:'Анализ вашего конкретного случая',caseSub:'Опишите ваш сценарий для более детального анализа',placeholder:'Пример: Хочу автоматизировать вызовы API через Python для массовой обработки писем…',btnAnalyze:'Анализировать с Claude',btnSysprompt:'Создать системный промпт',spLabel:'Системный промпт — вставьте в приложение',copy:'Копировать',copied:'Скопировано!',pAll:'Все профили',pUser:'Обычный пользователь',pDev:'Разработчик / API',pPro:'Бизнес / Pro',stepsLabel:'Процедура обжалования шаг за шагом',supportLabel:'Доступ к поддержке по плану',btnAppealLink:'Подать апелляцию на claude.ai',btnHelpWrite:'Попросить Claude помочь написать',btnAsk:'Спросить Claude',helpCenter:'Официальный центр помощи',faqTip:'Все ответы взяты из официальной документации Anthropic.',appealWarn:'По данным Transparency Hub Anthropic, только 3,3% апелляций приводят к восстановлению аккаунта.',stat1:'заблокированных аккаунтов H2 2025',stat2:'поданных апелляций',stat3:'процент успеха',stat4:'срок верификации возраста',enNote:'Шаги и FAQ остаются на английском, так как апелляция подаётся на английском на платформе Anthropic (claude.ai/restricted).',enNoteFaq:'FAQ на английском. Переводы от носителей языка приветствуются — см. GitHub.',lowRisk:'✓ Низкий риск',lowTitle:'Использование соответствует правилам',lowDesc:'Рискованных практик не обнаружено.',critBadge:'⚠ Критический риск',critTitle:'Блокировка почти неизбежна',highBadge:'⚠ Высокий риск',highTitle:'Высокая вероятность блокировки',warnBadge:'~ Умеренный риск',warnTitle:'Серая зона — скорректируйте использование',policyLabel:'Политика:',officialPolicy:'Официальная политика',detected:' практика(ок) обнаружено',critDesc:' — хотя бы одна вызывает немедленную блокировку.',highDesc:' которые напрямую нарушают политику Anthropic.',warnDesc:' которые могут привлечь внимание. Немедленной блокировки нет, но рекомендуется скорректировать.',disclaimer:'⚠️ Этот инструмент не связан с Anthropic. Независимый ресурс на основе официальной документации.'},
+  id:{title:'Claude — Pemeriksa Risiko Pemblokiran',subtitle:'Evaluasi penggunaan Claude Anda berdasarkan kebijakan resmi Anthropic.',langLabel:'Bahasa',langNote:'✓ Dokumentasi tersedia dalam bahasa ini di support.claude.com.',tab1:'Periksa Penggunaan',tab2:'Akun Saya Diblokir',tab3:'FAQ',profileLabel:'Profil Anda',checksLabel:'Tandai praktik yang sesuai dengan penggunaan Anda',alertsLabel:'Detail risiko yang terdeteksi',caseLabel:'Analisis kasus Anda',caseSub:'Deskripsikan kasus untuk analisis lebih mendetail',placeholder:'Contoh: Saya ingin mengotomatiskan panggilan API melalui Python untuk memproses email massal…',btnAnalyze:'Analisis kasus saya dengan Claude',btnSysprompt:'Buat system prompt dev',spLabel:'System prompt — tempel ke aplikasi',copy:'Salin',copied:'Disalin!',pAll:'Semua profil',pUser:'Pengguna umum',pDev:'Pengembang / API',pPro:'Bisnis / Pro',stepsLabel:'Proses banding langkah demi langkah',supportLabel:'Akses dukungan berdasarkan paket',btnAppealLink:'Kirim banding di claude.ai',btnHelpWrite:'Minta Claude bantu menulis',btnAsk:'Tanya Claude',helpCenter:'Pusat Bantuan Resmi',faqTip:'Semua jawaban bersumber dari dokumentasi resmi Anthropic.',appealWarn:'Menurut Transparency Hub Anthropic, hanya 3,3% banding menghasilkan pemulihan akun.',stat1:'akun diblokir H2 2025',stat2:'banding diajukan',stat3:'tingkat keberhasilan',stat4:'batas waktu verifikasi usia',enNote:'Langkah dan FAQ tetap dalam bahasa Inggris karena proses banding berlangsung dalam bahasa Inggris di platform Anthropic (claude.ai/restricted).',enNoteFaq:'FAQ dalam bahasa Inggris. Terjemahan oleh penutur asli disambut — lihat GitHub.',lowRisk:'✓ Risiko rendah',lowTitle:'Penggunaan tampak sesuai',lowDesc:'Tidak ada praktik berisiko yang terdeteksi.',critBadge:'⚠ Risiko kritis',critTitle:'Pemblokiran hampir pasti',highBadge:'⚠ Risiko tinggi',highTitle:'Kemungkinan besar diblokir',warnBadge:'~ Risiko sedang',warnTitle:'Zona abu-abu — sesuaikan penggunaan',policyLabel:'Kebijakan:',officialPolicy:'Kebijakan resmi',detected:' praktik terdeteksi',critDesc:' — setidaknya satu memicu pemblokiran segera.',highDesc:' yang langsung melanggar kebijakan Anthropic.',warnDesc:' yang mungkin menarik perhatian. Tidak ada pemblokiran segera, tetapi penyesuaian disarankan.',disclaimer:'⚠️ Alat ini tidak berafiliasi dengan Anthropic. Sumber daya independen berdasarkan dokumentasi resmi.'},
+  ja:{title:'Claude — アカウント安全チェッカー',subtitle:'Anthropicの公式ポリシーに基づいてClaude AIの使用リスクを評価します。',langLabel:'言語',langNote:'✓ このドキュメントはsupport.claude.comでこの言語で利用可能です。',tab1:'リスク確認',tab2:'アカウント停止された',tab3:'FAQ',profileLabel:'プロフィール',checksLabel:'該当する使用方法にチェックを入れてください',alertsLabel:'検出されたリスクの詳細',caseLabel:'具体的なケースを分析する',caseSub:'詳細な分析のために使用ケースを説明してください',placeholder:'例: Pythonスクリプトから大量のメールを処理するためにAPIを自動化したい…',btnAnalyze:'Claudeでケースを分析する',btnSysprompt:'システムプロンプトを生成',spLabel:'システムプロンプト — アプリに貼り付け',copy:'コピー',copied:'コピーしました！',pAll:'すべてのプロフィール',pUser:'一般ユーザー',pDev:'開発者 / API',pPro:'ビジネス / Pro',stepsLabel:'申し立て手続きのステップ',supportLabel:'プランごとのサポートアクセス',btnAppealLink:'claude.aiで申し立てを提出',btnHelpWrite:'Claudeに申し立て文作成を依頼',btnAsk:'Claudeに質問する',helpCenter:'公式ヘルプセンター',faqTip:'すべての回答はAnthropicの公式ドキュメントに基づいています。',appealWarn:'AnthropicのTransparency Hubによると、申し立ての成功率はわずか3.3%です。十分な準備が成功率を向上させます。',stat1:'停止アカウント数 H2 2025',stat2:'申し立て件数',stat3:'申し立て成功率',stat4:'年齢確認の期限',enNote:'手順とFAQは英語のままです。申し立てプロセスはAnthropicプラットフォーム（claude.ai/restricted）上で英語で行われるためです。',enNoteFaq:'FAQは英語のままです。ネイティブスピーカーによる翻訳歓迎 — GitHubを参照。',lowRisk:'✓ 低リスク',lowTitle:'使用は適合しているようです',lowDesc:'リスクのある使用方法は検出されませんでした。',critBadge:'⚠ 重大なリスク',critTitle:'停止はほぼ確実',highBadge:'⚠ 高リスク',highTitle:'停止の可能性が高い',warnBadge:'~ 中程度のリスク',warnTitle:'グレーゾーン — 使用を調整してください',policyLabel:'ポリシー:',officialPolicy:'公式ポリシー',detected:'件の使用方法が検出されました',critDesc:' — 少なくとも1件が即時停止を引き起こします。',highDesc:'がAnthropicの利用ポリシーに直接違反しています。',warnDesc:'がSafeguardsチームの注意を引く可能性があります。',disclaimer:'⚠️ このツールはAnthropicとは無関係です。公式ドキュメントに基づいた独立したリソースです。'},
+  ko:{title:'Claude — 계정 위험 검사기',subtitle:'Anthropic의 공식 정책에 따라 Claude AI 사용 위험을 평가합니다.',langLabel:'언어',langNote:'✓ 이 언어로 된 문서는 support.claude.com에서 이용 가능합니다.',tab1:'위험 확인',tab2:'계정이 차단됨',tab3:'FAQ',profileLabel:'프로필',checksLabel:'사용에 해당하는 방식에 체크하세요',alertsLabel:'감지된 위험 상세',caseLabel:'구체적인 사례 분석',caseSub:'더 자세한 분석을 위해 사용 사례를 설명하세요',placeholder:'예: Python 스크립트에서 API 호출을 자동화하여 대량의 이메일을 처리하고 싶습니다…',btnAnalyze:'Claude로 내 사례 분석하기',btnSysprompt:'개발자용 시스템 프롬프트 생성',spLabel:'시스템 프롬프트 — 앱에 붙여넣기',copy:'복사',copied:'복사됨!',pAll:'모든 프로필',pUser:'일반 사용자',pDev:'개발자 / API',pPro:'기업 / Pro',stepsLabel:'단계별 이의 제기 절차',supportLabel:'플랜별 지원 액세스',btnAppealLink:'claude.ai에서 이의 제기 제출',btnHelpWrite:'Claude에게 작성 도움 요청',btnAsk:'Claude에게 질문하기',helpCenter:'공식 도움말 센터',faqTip:'모든 답변은 Anthropic의 공식 문서에서 가져왔습니다.',appealWarn:'Anthropic의 Transparency Hub에 따르면, 이의 제기의 3.3%만이 계정 복구로 이어집니다.',stat1:'차단된 계정 H2 2025',stat2:'접수된 이의 제기',stat3:'이의 제기 성공률',stat4:'나이 확인 기한',enNote:'절차 및 FAQ는 Anthropic 플랫폼(claude.ai/restricted)에서 영어로 진행되므로 영어로 유지됩니다.',enNoteFaq:'FAQ는 영어로 유지됩니다. 원어민 번역 환영 — GitHub 참조.',lowRisk:'✓ 낮은 위험',lowTitle:'사용이 규정을 준수하는 것으로 보임',lowDesc:'위험한 방식이 감지되지 않았습니다.',critBadge:'⚠ 심각한 위험',critTitle:'차단이 거의 확실',highBadge:'⚠ 높은 위험',highTitle:'차단 가능성 높음',warnBadge:'~ 중간 위험',warnTitle:'회색 지대 — 사용을 조정하세요',policyLabel:'정책:',officialPolicy:'공식 정책',detected:'가지 방식 감지됨',critDesc:' — 하나 이상이 즉각적인 차단을 유발합니다.',highDesc:'이 Anthropic 정책을 직접 위반합니다.',warnDesc:'이 주의를 끌 수 있습니다. 즉각적인 차단은 없지만 조정 권장.',disclaimer:'⚠️ 이 도구는 Anthropic과 무관합니다. 공식 문서를 기반으로 한 독립적인 리소스입니다.'},
+  zh:{title:'Claude — 账号安全风险检查器',subtitle:'根据 Anthropic 官方政策评估您的 Claude AI 使用风险。',langLabel:'语言',langNote:'✓ 该文档在 support.claude.com 上提供此语言版本。',tab1:'风险检查',tab2:'我被封号了',tab3:'常见问题',profileLabel:'用户类型',checksLabel:'勾选符合您使用情况的选项',alertsLabel:'检测到的风险详情',caseLabel:'分析您的具体情况',caseSub:'描述您的使用场景以获得更详细的分析',placeholder:'例如：我想通过 Python 脚本自动化 API 调用来批量处理电子邮件…',btnAnalyze:'用 Claude 分析我的情况',btnSysprompt:'生成开发者系统提示词',spLabel:'系统提示词 — 粘贴到您的应用中',copy:'复制',copied:'已复制！',pAll:'所有类型',pUser:'普通用户',pDev:'开发者 / API',pPro:'企业 / Pro',stepsLabel:'申诉流程分步说明',supportLabel:'按套餐分类的支持渠道',btnAppealLink:'在 claude.ai 提交申诉',btnHelpWrite:'请求 Claude 帮助撰写申诉',btnAsk:'直接向 Claude 提问',helpCenter:'官方帮助中心',faqTip:'所有答案均来源于 Anthropic 官方文档。',appealWarn:'根据 Anthropic Transparency Hub 的数据，只有 3.3% 的申诉成功恢复账号。',stat1:'2025年下半年封禁账号数',stat2:'提交的申诉数量',stat3:'申诉成功率',stat4:'年龄验证截止期限',enNote:'申诉步骤和常见问题保留英文，因为申诉流程在 Anthropic 平台（claude.ai/restricted）上以英文进行。',enNoteFaq:'常见问题保留英文。欢迎母语者翻译 — 请参阅 GitHub。',lowRisk:'✓ 低风险',lowTitle:'使用符合规定',lowDesc:'未检测到高风险行为。',critBadge:'⚠ 严重风险',critTitle:'几乎确定会被封号',highBadge:'⚠ 高风险',highTitle:'被封号的可能性很高',warnBadge:'~ 中等风险',warnTitle:'灰色地带 — 请调整使用方式',policyLabel:'相关政策：',officialPolicy:'官方政策',detected:'项行为被检测到',critDesc:' — 其中至少有一项会触发立即封号。',highDesc:'直接违反了 Anthropic 的使用政策。',warnDesc:'可能引起 Safeguards 团队的注意。',disclaimer:'⚠️ 本工具与 Anthropic 无关。这是基于公开官方文档的独立资源。'},
+  'zh-tw':{title:'Claude — 帳號安全風險檢查器',subtitle:'根據 Anthropic 官方政策評估您的 Claude AI 使用風險。',langLabel:'語言',langNote:'✓ 此文件在 support.claude.com 上提供此語言版本。',tab1:'風險檢查',tab2:'我被封號了',tab3:'常見問題',profileLabel:'用戶類型',checksLabel:'勾選符合您使用情況的選項',alertsLabel:'偵測到的風險詳情',caseLabel:'分析您的具體情況',caseSub:'描述您的使用場景以獲得更詳細的分析',placeholder:'例如：我想透過 Python 腳本自動化 API 呼叫來大量處理電子郵件…',btnAnalyze:'用 Claude 分析我的情況',btnSysprompt:'產生開發者系統提示詞',spLabel:'系統提示詞 — 貼到您的應用程式中',copy:'複製',copied:'已複製！',pAll:'所有類型',pUser:'一般用戶',pDev:'開發者 / API',pPro:'企業 / Pro',stepsLabel:'申訴流程逐步說明',supportLabel:'依方案分類的支援管道',btnAppealLink:'在 claude.ai 提交申訴',btnHelpWrite:'請求 Claude 協助撰寫申訴',btnAsk:'直接向 Claude 提問',helpCenter:'官方說明中心',faqTip:'所有答案均來自 Anthropic 官方文件。',appealWarn:'根據 Anthropic Transparency Hub 的資料，只有 3.3% 的申訴成功恢復帳號。',stat1:'2025年下半年封禁帳號數',stat2:'提交的申訴數量',stat3:'申訴成功率',stat4:'年齡驗證截止期限',enNote:'申訴步驟和常見問題保留英文，因為申訴流程在 Anthropic 平台（claude.ai/restricted）上以英文進行。',enNoteFaq:'常見問題保留英文。歡迎母語者翻譯 — 請參閱 GitHub。',lowRisk:'✓ 低風險',lowTitle:'使用符合規定',lowDesc:'未偵測到高風險行為。',critBadge:'⚠ 嚴重風險',critTitle:'幾乎確定會被封號',highBadge:'⚠ 高風險',highTitle:'被封號的可能性很高',warnBadge:'~ 中等風險',warnTitle:'灰色地帶 — 請調整使用方式',policyLabel:'相關政策：',officialPolicy:'官方政策',detected:'項行為被偵測到',critDesc:' — 其中至少有一項會觸發立即封號。',highDesc:'直接違反了 Anthropic 的使用政策。',warnDesc:'可能引起 Safeguards 團隊的注意。',disclaimer:'⚠️ 本工具與 Anthropic 無關。這是基於公開官方文件的獨立資源。'}
+};
+
+const CHECKS_DATA=[
+  {id:'shared',label:{en:'Sharing an account between multiple people',fr:'Partage de compte entre plusieurs personnes',de:'Konto zwischen mehreren Personen teilen',es:'Compartir una cuenta entre varias personas',pt:'Compartilhar conta entre várias pessoas',it:'Condividere un account tra più persone',ru:'Общий аккаунт между несколькими людьми',id:'Berbagi akun antara beberapa orang',ja:'複数人でのアカウント共有',ko:'여러 사람이 계정을 공유',zh:'多人共享同一账号','zh-tw':'多人共用同一帳號'},sub:{en:'Multiple users logging in with same credentials',fr:'Plusieurs personnes avec les mêmes identifiants',de:'Mehrere Nutzer mit denselben Zugangsdaten',es:'Varios usuarios con las mismas credenciales',pt:'Múltiplos usuários com as mesmas credenciais',it:'Più utenti con le stesse credenziali',ru:'Несколько пользователей с одними данными',id:'Beberapa pengguna dengan kredensial yang sama',ja:'同じ認証情報で複数ユーザーがログイン',ko:'여러 사용자가 동일한 자격증명으로 로그인',zh:'多个用户使用相同账号密码登录','zh-tw':'多位使用者使用相同帳號密碼登入'},profiles:['all','user','pro'],risk:'high',policy:'Terms of Service — one account = one person',link:'https://www.anthropic.com/legal/consumer-terms'},
+  {id:'vpn',label:{en:'Accessing Claude from an unsupported country via VPN',fr:'Utilisation depuis un pays non supporté via VPN',de:'Claude über VPN aus einem nicht unterstützten Land nutzen',es:'Usar Claude desde un país no soportado mediante VPN',pt:'Usar Claude de um país não suportado via VPN',it:'Usare Claude da un paese non supportato tramite VPN',ru:'Использование через VPN из неподдерживаемой страны',id:'Menggunakan Claude dari negara yang tidak didukung via VPN',ja:'VPN経由でサポート対象外の国からClaudeを使用',ko:'VPN을 통해 지원되지 않는 국가에서 Claude 사용',zh:'通过 VPN 从不受支持的国家使用 Claude','zh-tw':'透過 VPN 從不支援的國家使用 Claude'},sub:{en:'Bypassing geographic restrictions',fr:'Contournement des restrictions géographiques',de:'Umgehung geografischer Einschränkungen',es:'Elusión de restricciones geográficas',pt:'Contornando restrições geográficas',it:'Aggiramento delle restrizioni geografiche',ru:'Обход географических ограничений',id:'Melewati pembatasan geografis',ja:'地域制限の回避',ko:'지리적 제한 우회',zh:'绕过地理位置限制','zh-tw':'繞過地理位置限制'},profiles:['all','user','dev','pro'],risk:'high',policy:'Terms of Service — unsupported locations',link:'https://support.claude.com/en/articles/8461763-where-can-i-access-claude'},
+  {id:'oauth',label:{en:'Extracting OAuth tokens for use in third-party tools',fr:'Extraction de tokens OAuth pour outils tiers',de:'OAuth-Token für Drittanbieter-Tools extrahieren',es:'Extraer tokens OAuth para herramientas de terceros',pt:'Extrair tokens OAuth para ferramentas de terceiros',it:'Estrarre token OAuth per app di terze parti',ru:'Извлечение OAuth-токенов для сторонних инструментов',id:'Mengekstrak token OAuth untuk alat pihak ketiga',ja:'OAuth トークンのサードパーティツールへの流用',ko:'서드파티 도구에서 OAuth 토큰 추출',zh:'提取 OAuth 令牌用于第三方工具','zh-tw':'提取 OAuth 令牌供第三方工具使用'},sub:{en:'Using Claude session tokens in unofficial apps',fr:'Tokens de session Claude dans des apps non officielles',de:'Claude-Session-Token in inoffiziellen Apps',es:'Tokens de sesión de Claude en apps no oficiales',pt:'Tokens de sessão Claude em apps não oficiais',it:'Token di sessione Claude in app non ufficiali',ru:'Токены сессии Claude в неофициальных приложениях',id:'Token sesi Claude di aplikasi tidak resmi',ja:'非公式アプリでClaudeセッショントークンを使用',ko:'비공식 앱에서 Claude 세션 토큰 사용',zh:'在非官方应用中使用 Claude 会话令牌','zh-tw':'在非官方應用程式中使用 Claude 會話令牌'},profiles:['all','dev'],risk:'high',policy:'Legal/Compliance Feb. 2026 — OAuth tokens reserved for official use only',link:'https://www.anthropic.com/legal/aup'},
+  {id:'automate',label:{en:'Heavy automation from a consumer subscription',fr:'Automatisation massive depuis un abonnement standard',de:'Intensive Automatisierung über ein Consumer-Abo',es:'Automatización masiva desde suscripción consumer',pt:'Automação intensa de assinatura consumer',it:'Automazione massiva da abbonamento consumer',ru:'Массовая автоматизация с потребительской подписки',id:'Otomatisasi berat dari langganan konsumen',ja:'コンシューマーサブスクリプションでの大規模自動化',ko:'소비자 구독에서의 대규모 자동화',zh:'通过消费者订阅进行大规模自动化','zh-tw':'透過消費者訂閱進行大規模自動化'},sub:{en:'Scripts or bots running continuously on Free/Pro/Max plan',fr:'Scripts, bots, pipelines continus sur abonnement standard',de:'Skripte oder Bots auf Free/Pro/Max-Plan',es:'Scripts o bots continuos en plan consumer',pt:'Scripts ou bots contínuos em plano consumer',it:'Script o bot continui su piano consumer',ru:'Скрипты или боты на потребительском плане',id:'Skrip atau bot yang berjalan terus di paket konsumen',ja:'Free/Pro/MaxプランでのBot連続実行',ko:'소비자 플랜에서 스크립트/봇 지속 실행',zh:'在 Free/Pro/Max 计划上持续运行脚本或机器人','zh-tw':'在 Free/Pro/Max 方案上持續執行腳本或機器人'},profiles:['all','dev','pro'],risk:'medium',policy:'Consumer Terms Oct. 2025 — ordinary individual usage expected',link:'https://www.anthropic.com/legal/consumer-terms'},
+  {id:'harness',label:{en:'Using unofficial harnesses or wrappers (e.g. OpenClaw)',fr:'Harnesses ou wrappers non officiels (ex : OpenClaw)',de:'Inoffizielle Harnesses oder Wrapper (z.B. OpenClaw)',es:'Harnesses o wrappers no oficiales (ej. OpenClaw)',pt:'Harnesses ou wrappers não oficiais (ex.: OpenClaw)',it:'Harness o wrapper non ufficiali (es. OpenClaw)',ru:'Неофициальные harness или wrapper (напр. OpenClaw)',id:'Harness atau wrapper tidak resmi (mis. OpenClaw)',ja:'非公式ハーネス・ラッパー（例：OpenClaw）',ko:'비공식 하네스 또는 래퍼 사용(예: OpenClaw)',zh:'使用非官方 harness 或 wrapper（如 OpenClaw）','zh-tw':'使用非官方 harness 或 wrapper（如 OpenClaw）'},sub:{en:'Tools routing around the official Claude interface',fr:'Outils contournant l\'interface officielle Claude',de:'Tools, die die offizielle Claude-Oberfläche umgehen',es:'Herramientas que evitan la interfaz oficial de Claude',pt:'Ferramentas que contornam a interface oficial',it:'Strumenti che aggirano l\'interfaccia ufficiale',ru:'Инструменты в обход официального интерфейса',id:'Alat yang melewati antarmuka resmi Claude',ja:'公式Claudeインターフェースを回避するツール',ko:'공식 Claude 인터페이스를 우회하는 도구',zh:'绕过官方 Claude 界面的工具','zh-tw':'繞過官方 Claude 介面的工具'},profiles:['all','dev'],risk:'medium',policy:'Pricing policy Jan. 2026 — harnesses must use pay-per-token API',link:'https://www.anthropic.com/legal/aup'},
+  {id:'resell',label:{en:'Reselling Claude access or building a competing model',fr:'Revente d\'accès Claude ou construction d\'un concurrent',de:'Claude-Zugang weiterverkaufen oder Konkurrenzmodell erstellen',es:'Revender acceso a Claude o construir modelo rival',pt:'Revender acesso ao Claude ou construir modelo concorrente',it:'Rivendere accesso a Claude o creare un modello rivale',ru:'Перепродажа доступа или создание конкурирующей модели',id:'Menjual kembali akses Claude atau membangun model pesaing',ja:'Claudeアクセスの再販または競合モデルの構築',ko:'Claude 액세스 재판매 또는 경쟁 모델 구축',zh:'转售 Claude 访问权限或构建竞争性模型','zh-tw':'轉售 Claude 存取權限或建立競爭性模型'},sub:{en:'Product that resells Claude or trains a rival AI on its outputs',fr:'Produit revendant l\'accès ou entraînant un modèle rival',de:'Produkt, das Zugang verkauft oder Konkurrenzmodell trainiert',es:'Producto que revende acceso o entrena un modelo rival',pt:'Produto que revende acesso ou treina modelo rival',it:'Prodotto che rivende accesso o addestra un modello rivale',ru:'Продукт, перепродающий доступ или обучающий конкурента',id:'Produk yang menjual kembali akses atau melatih model AI rival',ja:'Claudeアクセスを再販または競合モデルをトレーニングする製品',ko:'Claude를 재판매하거나 경쟁 모델을 훈련하는 제품',zh:'转售访问权限或用输出训练竞争性 AI','zh-tw':'轉售存取權限或用輸出訓練競爭性 AI'},profiles:['all','dev','pro'],risk:'high',policy:'Usage Policy — Universal Usage Standards',link:'https://www.anthropic.com/legal/aup'},
+  {id:'harmful',label:{en:'Generating prohibited content (CSAM, weapons, hate…)',fr:'Contenu interdit (CSAM, armes, haine…)',de:'Verbotene Inhalte generieren (CSAM, Waffen, Hass…)',es:'Contenido prohibido (CSAM, armas, odio…)',pt:'Conteúdo proibido (CSAM, armas, ódio…)',it:'Contenuti vietati (CSAM, armi, odio…)',ru:'Запрещённый контент (CSAM, оружие, ненависть…)',id:'Konten terlarang (CSAM, senjata, kebencian…)',ja:'禁止コンテンツの生成（CSAM、武器、ヘイト…）',ko:'금지된 콘텐츠 생성(CSAM, 무기, 혐오…)',zh:'生成违禁内容（CSAM、武器、仇恨言论等）','zh-tw':'產生違禁內容（CSAM、武器、仇恨言論等）'},sub:{en:'Content explicitly banned under Universal Usage Standards',fr:'Contenu explicitement interdit par les Universal Usage Standards',de:'Explizit verbotene Inhalte unter den Universal Usage Standards',es:'Contenido prohibido bajo Universal Usage Standards',pt:'Conteúdo proibido pelos Universal Usage Standards',it:'Contenuto vietato dagli Universal Usage Standards',ru:'Контент, запрещённый Universal Usage Standards',id:'Konten yang dilarang Universal Usage Standards',ja:'ユニバーサル使用基準で禁止されたコンテンツ',ko:'Universal Usage Standards에 금지된 콘텐츠',zh:'Universal Usage Standards 明确禁止的内容','zh-tw':'Universal Usage Standards 明確禁止的內容'},profiles:['all','user','dev','pro'],risk:'critical',policy:'Usage Policy — Universal Usage Standards',link:'https://www.anthropic.com/legal/aup'},
+  {id:'political',label:{en:'Deceptive political content or electoral targeting',fr:'Contenu politique déceptif ou ciblage électoral',de:'Täuschende politische Inhalte oder Wähler-Targeting',es:'Contenido político engañoso o targeting electoral',pt:'Conteúdo político enganoso ou direcionamento eleitoral',it:'Contenuto politico ingannevole o targeting elettorale',ru:'Обманный политический контент или таргетирование избирателей',id:'Konten politik menipu atau penargetan pemilih',ja:'欺瞞的政治コンテンツまたは選挙ターゲティング',ko:'기만적인 정치 콘텐츠 또는 선거 타겟팅',zh:'欺骗性政治内容或选举定向','zh-tw':'欺騙性政治內容或選舉定向'},sub:{en:'Automated campaigns, fake political personas, voter targeting',fr:'Campagnes automatisées, faux profils politiques, ciblage électoral',de:'Automatisierte Kampagnen, Fake-Personas, Wähler-Targeting',es:'Campañas automatizadas, perfiles falsos, targeting electoral',pt:'Campanhas automatizadas, personas falsas, targeting eleitoral',it:'Campagne automatizzate, false identità politiche, targeting elettorale',ru:'Автоматизированные кампании, фейковые персоны',id:'Kampanye otomatis, persona palsu, penargetan pemilih',ja:'自動化キャンペーン、偽政治ペルソナ、有権者ターゲティング',ko:'자동화된 캠페인, 가짜 정치적 페르소나, 유권자 타겟팅',zh:'自动化竞选、虚假身份、选民定向','zh-tw':'自動化競選、虛假身份、選民定向'},profiles:['all','user','dev','pro'],risk:'high',policy:'Usage Policy Sept. 2025 — prohibited if deceptive',link:'https://www.anthropic.com/legal/aup'},
+  {id:'malware',label:{en:'Creating malware or exploiting vulnerabilities',fr:'Création de malware ou exploitation de vulnérabilités',de:'Malware erstellen oder Sicherheitslücken ausnutzen',es:'Crear malware o explotar vulnerabilidades',pt:'Criar malware ou explorar vulnerabilidades',it:'Creare malware o sfruttare vulnerabilità',ru:'Создание вредоносного ПО или эксплуатация уязвимостей',id:'Membuat malware atau mengeksploitasi kerentanan',ja:'マルウェア作成または脆弱性の悪用',ko:'악성코드 생성 또는 취약점 악용',zh:'创建恶意软件或利用漏洞','zh-tw':'建立惡意軟體或利用漏洞'},sub:{en:'Malicious code, network attacks, infrastructure compromise',fr:'Code malveillant, attaques réseau, compromission d\'infrastructure',de:'Schädlicher Code, Netzwerkangriffe, Infrastrukturschäden',es:'Código malicioso, ataques de red, compromiso de infraestructura',pt:'Código malicioso, ataques de rede, comprometimento de infraestrutura',it:'Codice malevolo, attacchi di rete, compromissione infrastruttura',ru:'Вредоносный код, сетевые атаки, компрометация инфраструктуры',id:'Kode berbahaya, serangan jaringan, kompromi infrastruktur',ja:'悪意のあるコード、ネットワーク攻撃、インフラへの侵害',ko:'악성 코드, 네트워크 공격, 인프라 침해',zh:'恶意代码、网络攻击、基础设施入侵','zh-tw':'惡意程式碼、網路攻擊、基礎設施入侵'},profiles:['all','dev'],risk:'critical',policy:'Usage Policy Sept. 2025 — new cybersecurity section',link:'https://www.anthropic.com/legal/aup'}
+];
+
+const STEPS=[
+  {t:'Check if it\'s actually a ban',b:'Visit <a href="https://status.anthropic.com" target="_blank" rel="noopener">status.anthropic.com</a> first to rule out a service outage. Also check for an age-verification email (Yoti) — that\'s a suspension, not a permanent ban.'},
+  {t:'Submit the official appeal form',b:'Go to <a href="https://claude.ai/restricted" target="_blank" rel="noopener">claude.ai/restricted</a> and fill out the appeal form with your account email, usage description, and context. Be factual and concise.'},
+  {t:'Prepare supporting evidence',b:'Attach proof of payment (for paid accounts), a clear description of your legitimate use case, and context showing no intentional violation. Stick to facts — avoid emotional appeals.'},
+  {t:'Age verification (if flagged as minor)',b:'Use the Yoti link in your email. You have <strong>30 days</strong> before it expires. Accepted: government ID, facial scan, or biometrics. Many users were successfully reinstated this way.'},
+  {t:'Follow up on subscription / refund',b:'If terminated without a violation, Consumer Terms (Oct. 2025) allow refund eligibility. Contact Fin bot → "I can\'t login". Pro/Max/Team owners have access to the human support team.'},
+  {t:'EU / UK / Australia escalation',b:'EU: DSA single point of contact (see <a href="https://support.claude.com/en/" target="_blank" rel="noopener">support.claude.com</a>). UK: OSA Google Form. Australia: eSafety Commissioner compliance page.'}
+];
+
+const SUPPORT_PLANS=[
+  {icon:'ti-crown',bg:'#EAF3DE',col:'#3B6D11',t:'Pro, Max, Team Owners, Enterprise Owners, Console Admins',b:'Full human support via in-app messenger. Click your initials → "Get help" → Fin bot → "Send us a message". Human agent responds by email.'},
+  {icon:'ti-users',bg:'#FAEEDA',col:'#854F0B',t:'Team/Enterprise non-owners, Console non-admins',b:'Fin AI bot only. To escalate to a human, your account\'s Primary Owner or Admin must contact support on your behalf.'},
+  {icon:'ti-user',bg:'#E6F1FB',col:'#185FA5',t:'Free users',b:'Fin AI bot + help docs only. Human support available for account deletion only. Can\'t log in? Click the chat icon on support.claude.com → "I can\'t login".'}
+];
+
+const FAQS=[
+  {q:'Why was my account banned without warning?',a:'Anthropic\'s automated Safeguards systems can trigger immediate suspension without prior warning, particularly for serious violations. High-risk uses (CSAM, malware, fraud) result in immediate bans. The 2026 age-verification wave also caught many legitimate users without clear notice.'},
+  {q:'Can I get a refund if I was banned?',a:'Yes — if your account was terminated without a policy violation, Anthropic\'s Consumer Terms (Oct. 2025) allow refund eligibility. Contact support via the Help Center. If banned for a genuine violation, no refund is provided.'},
+  {q:'How long does the appeal process take?',a:'Anthropic\'s support page notes response times are "longer than normal." Community reports suggest wait times range from days to weeks. Pro, Max, and Team owners get faster responses via human support.'},
+  {q:'Is the 3.3% appeal success rate accurate?',a:'Yes — Anthropic\'s Transparency Hub (Jan. 2026) reported 1,700 successful overturns out of 52,000 appeals in H2 2025. Your odds improve significantly with strong evidence: payment proof, a clear use case, and no prior violations.'},
+  {q:'Can I create a new account after being banned?',a:'Creating a new account to circumvent a ban explicitly violates Anthropic\'s Terms of Service and will likely result in the new account being banned too. The correct path is to submit an appeal via claude.ai/restricted.'},
+  {q:'Does using third-party tools like OpenClaw risk a ban?',a:'Yes, since early 2026. Third-party harnesses must use the pay-per-token API with API keys — not a consumer subscription. Using them via Pro/Max is now a policy violation actively enforced by Anthropic.'},
+  {q:'What happens to my data and projects if I\'m banned?',a:'Your data remains tied to your account. If reinstated via appeal, data should be intact. However, users reported projects being "broken" even after reinstatement. No automatic data export is available for banned accounts.'},
+  {q:'Are free users treated differently from paid users?',a:'Free users have Fin bot and help docs only — no human support except for account deletion. Paid users (Pro, Max, Team Owners) have human support access and are generally prioritised in appeal reviews.'},
+  {q:'What is the age verification process?',a:'Since December 2025, all users must be 18+. If flagged, you receive a Yoti link valid for 30 days. Yoti accepts government ID, facial scan, or biometrics. Many users were successfully reinstated after completing this.'},
+  {q:'Does Incognito mode protect me from policy enforcement?',a:'No. Incognito conversations are not used for model training, but Anthropic\'s Safeguards systems can still monitor them for policy violations. Incognito mode does not bypass usage policy enforcement.'}
+];
+
+const SUPPORT_BASE = 'https://support.claude.com/';
+let currentLang = 'en';
+let currentProfile = 'all';
+let checked = new Set();
+
+function getDocsLang(l){return l==='zh-tw'?'zh-tw':l;}
+
+function setLang(l){
+  currentLang = l;
+  const u = UI[l] || UI['en'];
+  document.getElementById('ui-title').textContent = u.title;
+  document.getElementById('ui-subtitle').textContent = u.subtitle;
+  document.getElementById('ui-lang-label').textContent = u.langLabel;
+  document.getElementById('lang-note').textContent = u.langNote;
+  document.getElementById('tab1-label').textContent = u.tab1;
+  document.getElementById('tab2-label').textContent = u.tab2;
+  document.getElementById('tab3-label').textContent = u.tab3;
+  document.getElementById('ui-profile-label').textContent = u.profileLabel;
+  document.getElementById('ui-checks-label').textContent = u.checksLabel;
+  document.getElementById('ui-alerts-label').textContent = u.alertsLabel;
+  document.getElementById('ui-case-label').textContent = u.caseLabel;
+  document.getElementById('ui-case-sub').textContent = u.caseSub;
+  document.getElementById('use-case-input').placeholder = u.placeholder;
+  document.getElementById('ui-btn-analyze').textContent = u.btnAnalyze;
+  document.getElementById('ui-btn-sysprompt').textContent = u.btnSysprompt;
+  document.getElementById('ui-sp-label').textContent = u.spLabel;
+  document.getElementById('ui-copy').textContent = u.copy;
+  document.getElementById('p-all').textContent = u.pAll;
+  document.getElementById('p-user').textContent = u.pUser;
+  document.getElementById('p-dev').textContent = u.pDev;
+  document.getElementById('p-pro').textContent = u.pPro;
+  document.getElementById('ui-steps-label').textContent = u.stepsLabel;
+  document.getElementById('ui-support-label').textContent = u.supportLabel;
+  document.getElementById('ui-btn-appeal-link').textContent = u.btnAppealLink;
+  document.getElementById('ui-btn-help-write').textContent = u.btnHelpWrite;
+  document.getElementById('ui-btn-ask').textContent = u.btnAsk;
+  document.getElementById('ui-helpcenter').textContent = u.helpCenter;
+  document.getElementById('faq-tip-text').innerHTML = '<i class="ti ti-book" style="vertical-align:-2px;margin-right:5px"></i>' + u.faqTip;
+  document.getElementById('appeal-warn-text').innerHTML = '<i class="ti ti-alert-triangle" style="vertical-align:-2px;margin-right:5px"></i>' + u.appealWarn;
+  document.getElementById('stat1').textContent = u.stat1;
+  document.getElementById('stat2').textContent = u.stat2;
+  document.getElementById('stat3').textContent = u.stat3;
+  document.getElementById('stat4').textContent = u.stat4;
+  document.getElementById('en-note-text').textContent = u.enNote;
+  document.getElementById('en-note-faq').textContent = u.enNoteFaq;
+  document.getElementById('disclaimer-text').textContent = u.disclaimer;
+  document.getElementById('help-center-link').href = SUPPORT_BASE + getDocsLang(l) + '/';
+  document.getElementById('system-prompt-output').classList.add('hidden');
+  renderChecks(); updateRisk();
+}
+
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('tab-' + t).classList.add('active');
+  document.getElementById('panel-' + t).classList.add('active');
+}
+
+function setProfile(p){
+  currentProfile = p;
+  document.querySelectorAll('.profile-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('btn-' + p).classList.add('active');
+  renderChecks(); updateRisk();
+}
+
+function renderChecks(){
+  const c = document.getElementById('checks-container'); c.innerHTML = '';
+  CHECKS_DATA.filter(x => currentProfile === 'all' || x.profiles.includes(currentProfile)).forEach(x => {
+    const lbl = x.label[currentLang] || x.label['en'];
+    const sub = x.sub[currentLang] || x.sub['en'];
+    const d = document.createElement('div');
+    d.className = 'check-item' + (checked.has(x.id) ? ' checked' : '');
+    d.onclick = () => toggleCheck(x.id);
+    d.innerHTML = `<div class="check-box">${checked.has(x.id) ? '<i class="ti ti-check" style="font-size:11px;color:white;"></i>' : ''}</div><div><div class="check-label">${lbl}</div><div class="check-sub">${sub}</div></div>`;
+    c.appendChild(d);
+  });
+}
+
+function toggleCheck(id){ if(checked.has(id)) checked.delete(id); else checked.add(id); renderChecks(); updateRisk(); }
+
+function updateRisk(){
+  const u = UI[currentLang] || UI['en'];
+  const active = CHECKS_DATA.filter(x => checked.has(x.id));
+  const p = document.getElementById('risk-result');
+  p.className = 'risk-panel';
+  if(active.length === 0){
+    p.classList.add('safe');
+    document.getElementById('risk-badge').textContent = u.lowRisk;
+    document.getElementById('risk-title').textContent = u.lowTitle;
+    document.getElementById('risk-desc').textContent = u.lowDesc;
+    document.getElementById('alerts-container').classList.add('hidden');
+    return;
+  }
+  const hasCritical = active.some(x => x.risk === 'critical');
+  const hasHigh = active.some(x => x.risk === 'high');
+  const al = document.getElementById('alerts-list'); al.innerHTML = '';
+  active.forEach(x => {
+    const col = x.risk === 'critical' ? '#A32D2D' : x.risk === 'high' ? '#854F0B' : '#3B6D11';
+    const card = document.createElement('div'); card.className = 'alert-card';
+    const lbl = x.label[currentLang] || x.label['en'];
+    card.innerHTML = `<div class="alert-title"><i class="ti ti-alert-triangle" style="color:${col};font-size:13px;"></i>${lbl}</div><div class="alert-body"><strong>${u.policyLabel}</strong> ${x.policy}</div><a class="ext-link" href="${x.link}" target="_blank" rel="noopener"><i class="ti ti-external-link" style="font-size:11px;"></i>${u.officialPolicy}</a>`;
+    al.appendChild(card);
+  });
+  document.getElementById('alerts-container').classList.remove('hidden');
+  if(hasCritical){
+    p.classList.add('danger');
+    document.getElementById('risk-badge').textContent = u.critBadge;
+    document.getElementById('risk-title').textContent = u.critTitle;
+    document.getElementById('risk-desc').textContent = active.length + u.detected + u.critDesc;
+  } else if(hasHigh){
+    p.classList.add('danger');
+    document.getElementById('risk-badge').textContent = u.highBadge;
+    document.getElementById('risk-title').textContent = u.highTitle;
+    document.getElementById('risk-desc').textContent = active.length + u.detected + u.highDesc;
+  } else {
+    p.classList.add('warning');
+    document.getElementById('risk-badge').textContent = u.warnBadge;
+    document.getElementById('risk-title').textContent = u.warnTitle;
+    document.getElementById('risk-desc').textContent = active.length + u.detected + u.warnDesc;
+  }
+}
+
+function analyzeCase(){
+  const input = document.getElementById('use-case-input').value.trim();
+  const flags = Array.from(checked).join(', ') || 'none';
+  const msg = input
+    ? `Analyse this Claude use case against Anthropic's Usage Policies and tell me the ban risk: "${input}". Profile: ${currentProfile}. Flagged practices: ${flags}.`
+    : `Analyse my Claude account ban risk. Profile: ${currentProfile}. Flagged practices: ${flags}.`;
+  window.open('https://claude.ai/?q=' + encodeURIComponent(msg), '_blank');
+}
+
+function generateSystemPrompt(){
+  const out = document.getElementById('system-prompt-output');
+  document.getElementById('system-prompt-text').textContent =
+`SYSTEM — Claude Usage Policy Guard
+
+You are an AI assistant powered by Claude (Anthropic).
+This system monitors conversations for potentially non-compliant usage.
+
+MONITORING RULES:
+- If the user requests prohibited content (CSAM, weapons, hate speech, malware), refuse immediately and explain why.
+- If the user appears to be circumventing Anthropic's policies, calmly inform them.
+- If the request falls into a grey zone (medical, legal, financial without oversight), flag the limitations and recommend a professional.
+- If usage seems heavily automated from a consumer account, suggest the official API with API keys.
+
+WARNING FORMAT (use when needed):
+"⚠️ This request may violate Anthropic's Usage Policies ([relevant rule]). I cannot proceed / I recommend [alternative]. More info: anthropic.com/legal/aup"
+
+For legitimate usage, respond normally without mentioning these rules.`;
+  out.classList.remove('hidden');
+}
+
+function copyPrompt(){
+  const u = UI[currentLang] || UI['en'];
+  navigator.clipboard.writeText(document.getElementById('system-prompt-text').textContent).then(() => {
+    const sp = document.getElementById('ui-copy');
+    const orig = sp.textContent;
+    sp.textContent = u.copied;
+    setTimeout(() => { sp.textContent = orig; }, 2000);
+  });
+}
+
+function initSteps(){
+  const sc = document.getElementById('steps-container'); sc.innerHTML = '';
+  STEPS.forEach((s, i) => {
+    const d = document.createElement('div'); d.className = 'step-card';
+    d.innerHTML = `<div class="step-num">${i + 1}</div><div><div class="step-title">${s.t}</div><div class="step-body">${s.b}</div></div>`;
+    sc.appendChild(d);
+  });
+  const supp = document.getElementById('support-container'); supp.innerHTML = '';
+  SUPPORT_PLANS.forEach(s => {
+    const d = document.createElement('div'); d.className = 'support-card';
+    d.innerHTML = `<div class="support-icon" style="background:${s.bg}"><i class="ti ${s.icon}" style="color:${s.col};font-size:17px;"></i></div><div><div class="support-title">${s.t}</div><div class="support-body">${s.b}</div></div>`;
+    supp.appendChild(d);
+  });
+}
+
+function initFaq(){
+  const c = document.getElementById('faq-list'); c.innerHTML = '';
+  FAQS.forEach((f, i) => {
+    const item = document.createElement('div'); item.className = 'faq-item';
+    item.innerHTML = `<button class="faq-q" onclick="toggleFaq(${i})"><span>${f.q}</span><i class="ti ti-chevron-down" id="faq-icon-${i}" style="font-size:13px;color:var(--text2);transition:transform .2s;flex-shrink:0;"></i></button><div class="faq-a" id="faq-a-${i}">${f.a}</div>`;
+    c.appendChild(item);
+  });
+}
+
+function toggleFaq(i){
+  const a = document.getElementById('faq-a-' + i);
+  const ic = document.getElementById('faq-icon-' + i);
+  const open = a.classList.contains('open');
+  document.querySelectorAll('.faq-a').forEach(x => x.classList.remove('open'));
+  document.querySelectorAll('[id^="faq-icon-"]').forEach(x => x.style.transform = '');
+  if(!open){ a.classList.add('open'); ic.style.transform = 'rotate(180deg)'; }
+}
+
+// Init
+renderChecks(); updateRisk(); initSteps(); initFaq();
+</script>
+
+<!-- Structured data for SEO -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Claude Account Safety Checker",
+  "description": "Free tool to evaluate your Claude AI usage against Anthropic's official Usage Policies. Check your ban risk, learn the appeal process, and read the FAQ — in 12 languages.",
+  "url": "https://alphilippo.github.io/claude-safety-checker",
+  "author": {
+    "@type": "Person",
+    "name": "alphilippo",
+    "url": "https://github.com/alphilippo"
+  },
+  "applicationCategory": "UtilityApplication",
+  "inLanguage": ["en","fr","de","es","pt","it","ru","id","ja","ko","zh","zh-TW"],
+  "isAccessibleForFree": true
+}
+</script>
+
+</body>
+</html>
